@@ -16,7 +16,8 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
- 
+.build
+
 # CocoaPods
 #
 # We recommend against adding the Pods directory to your .gitignore. However
@@ -37,3 +38,7 @@ examples/AsYouType/.DS_Store
 examples/.DS_Store
 .DS_Store
 PhoneNumberKit/.DS_Store
+
+# JB
+
+.idea

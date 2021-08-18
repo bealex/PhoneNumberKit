@@ -17,12 +17,10 @@ final class MetadataManager {
     // MARK: Lifecycle
 
     /// Private init populates metadata territories and the two hashed dictionaries for faster lookup.
-    ///
-    /// - Parameter metadataCallback: a closure that returns metadata as JSON Data.
-    public init(metadataCallback: MetadataCallback) {
-        self.territories = self.populateTerritories(metadataCallback: metadataCallback)
-        for item in self.territories {
-            var currentTerritories: [MetadataTerritory] = self.territoriesByCode[item.countryCode] ?? [MetadataTerritory]()
+    public init() {
+        territories = metadataPreParsed
+        for item in territories {
+            var currentTerritories: [MetadataTerritory] = territoriesByCode[item.countryCode] ?? [MetadataTerritory]()
             // In the case of multiple countries sharing a calling code, such as the NANPA countries,
             // the one indicated with "isMainCountryForCode" in the metadata should be first.
             if item.mainCountryForCode {
@@ -30,11 +28,11 @@ final class MetadataManager {
             } else {
                 currentTerritories.append(item)
             }
-            self.territoriesByCode[item.countryCode] = currentTerritories
-            if self.mainTerritoryByCode[item.countryCode] == nil || item.mainCountryForCode == true {
-                self.mainTerritoryByCode[item.countryCode] = item
+            territoriesByCode[item.countryCode] = currentTerritories
+            if mainTerritoryByCode[item.countryCode] == nil || item.mainCountryForCode == true {
+                mainTerritoryByCode[item.countryCode] = item
             }
-            self.territoriesByCountry[item.codeID] = item
+            territoriesByCountry[item.codeID] = item
         }
     }
 
@@ -70,7 +68,7 @@ final class MetadataManager {
     ///
     /// - returns: optional array of MetadataTerritory objects.
     internal func filterTerritories(byCode code: UInt64) -> [MetadataTerritory]? {
-        return self.territoriesByCode[code]
+        territoriesByCode[code]
     }
 
     /// Get the MetadataTerritory objects for an ISO 639 compliant region code.
@@ -79,7 +77,7 @@ final class MetadataManager {
     ///
     /// - returns: A MetadataTerritory object.
     internal func filterTerritories(byCountry country: String) -> MetadataTerritory? {
-        return self.territoriesByCountry[country.uppercased()]
+        territoriesByCountry[country.uppercased()]
     }
 
     /// Get the main MetadataTerritory objects for a given country code.
@@ -88,6 +86,6 @@ final class MetadataManager {
     ///
     /// - returns: A MetadataTerritory object.
     internal func mainTerritory(forCode code: UInt64) -> MetadataTerritory? {
-        return self.mainTerritoryByCode[code]
+        mainTerritoryByCode[code]
     }
 }

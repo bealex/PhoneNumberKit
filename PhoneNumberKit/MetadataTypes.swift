@@ -56,6 +56,56 @@ public struct MetadataTerritory: Decodable {
     public let uan: MetadataPhoneNumberDesc?
     public let numberFormats: [MetadataPhoneNumberFormat]
     public let leadingDigits: String?
+
+    public init(
+        cID: String,
+        cC: UInt64,
+        iP: String? = nil,
+        mC: Bool = false,
+        nP: String? = nil,
+        nPFR: String? = nil,
+        nPFP: String? = nil,
+        nPTR: String? = nil,
+        pEP: String? = nil,
+        em: MetadataPhoneNumberDesc? = nil,
+        fL: MetadataPhoneNumberDesc? = nil,
+        gD: MetadataPhoneNumberDesc? = nil,
+        mo: MetadataPhoneNumberDesc? = nil,
+        pa: MetadataPhoneNumberDesc? = nil,
+        pN: MetadataPhoneNumberDesc? = nil,
+        pR: MetadataPhoneNumberDesc? = nil,
+        sC: MetadataPhoneNumberDesc? = nil,
+        tF: MetadataPhoneNumberDesc? = nil,
+        vm: MetadataPhoneNumberDesc? = nil,
+        vi: MetadataPhoneNumberDesc? = nil,
+        uan: MetadataPhoneNumberDesc? = nil,
+        nF: [MetadataPhoneNumberFormat] = [],
+        lD: String? = nil
+    ) {
+        codeID = cID
+        countryCode = cC
+        internationalPrefix = iP
+        mainCountryForCode = mC
+        nationalPrefix = nP
+        nationalPrefixFormattingRule = nPFR
+        nationalPrefixForParsing = nPFP
+        nationalPrefixTransformRule = nPTR
+        preferredExtnPrefix = pEP
+        emergency = em
+        fixedLine = fL
+        generalDesc = gD
+        mobile = mo
+        pager = pa
+        personalNumber = pN
+        premiumRate = pR
+        sharedCost = sC
+        tollFree = tF
+        voicemail = vm
+        voip = vi
+        self.uan = uan
+        numberFormats = nF
+        leadingDigits = lD
+    }
 }
 
 /**
@@ -70,11 +120,28 @@ public struct MetadataPhoneNumberDesc: Decodable {
     public let nationalNumberPattern: String?
     public let possibleNumberPattern: String?
     public let possibleLengths: MetadataPossibleLengths?
+
+    public init(
+        eN: String? = nil,
+        nNP: String? = nil,
+        pNP: String? = nil,
+        pL: MetadataPossibleLengths? = nil
+    ) {
+        exampleNumber = eN
+        nationalNumberPattern = nNP
+        possibleNumberPattern = pNP
+        possibleLengths = pL
+    }
 }
 
 public struct MetadataPossibleLengths: Decodable {
     let national: String?
     let localOnly: String?
+
+    public init(na: String? = nil, lO: String? = nil) {
+        national = na
+        localOnly = lO
+    }
 }
 
 /**
@@ -96,6 +163,24 @@ public struct MetadataPhoneNumberFormat: Decodable {
     public var nationalPrefixFormattingRule: String?
     public let nationalPrefixOptionalWhenFormatting: Bool?
     public let domesticCarrierCodeFormattingRule: String?
+
+    public init(
+        pa: String? = nil,
+        fo: String? = nil,
+        iF: String? = nil,
+        lDP: [String]? = nil,
+        nPFR: String? = nil,
+        nPOWF: Bool? = false,
+        dCCFR: String? = nil
+    ) {
+        pattern = pa
+        format = fo
+        intlFormat = iF
+        leadingDigitsPatterns = lDP
+        nationalPrefixFormattingRule = nPFR
+        nationalPrefixOptionalWhenFormatting = nPOWF
+        domesticCarrierCodeFormattingRule = dCCFR
+    }
 }
 
 /// Internal object for metadata parsing
